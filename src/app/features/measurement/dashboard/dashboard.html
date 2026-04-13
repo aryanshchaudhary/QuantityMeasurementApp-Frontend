@@ -1,0 +1,113 @@
+<div class="dashboard">
+
+  <!-- Header -->
+  <div class="header">
+    <h2 class="logo">✨ Unitra</h2>
+
+    <button class="logout-btn" (click)="logout()">
+      ⎋ Logout
+    </button>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    ⚡ Smart Quantity Measurement Tool
+  </div>
+
+  <!-- Actions -->
+  <div class="section">
+    <h3>Choose Action</h3>
+    <div class="actions">
+      <div *ngFor="let action of actions"
+           class="pill"
+           [class.active]="selectedAction === action"
+           (click)="selectAction(action)">
+
+        <span class="icon">
+          {{ action === 'Convert' ? '🔄' :
+             action === 'Compare' ? '⚖️' :
+             action === 'Add' ? '➕' :
+             action === 'Subtract' ? '➖' : '➗' }}
+        </span>
+
+        {{ action }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Types -->
+  <div class="section">
+    <h3>Choose Type</h3>
+    <div class="types">
+      <div *ngFor="let type of filteredTypes"
+           class="pill"
+           [class.active]="selectedType === type"
+           (click)="selectType(type)">
+        {{ type }}
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= INPUTS ================= -->
+  <div class="inputs">
+
+    <!-- VALUE 1 -->
+    <div class="input-box">
+      <input type="number" [(ngModel)]="value1" required />
+      <label>Value 1</label>
+
+      <select [(ngModel)]="unit1" (change)="onUnit1Change()">
+        <option *ngFor="let u of unitsMap[selectedType]" [value]="u">
+          {{u}}
+        </option>
+      </select>
+    </div>
+
+    <!-- VALUE 2 -->
+    <div class="input-box" *ngIf="selectedAction !== 'Convert'">
+      <input type="number" [(ngModel)]="value2" required />
+      <label>Value 2</label>
+
+      <select [(ngModel)]="unit2">
+        <option *ngFor="let u of unitsMap[selectedType]" [value]="u">
+          {{u}}
+        </option>
+      </select>
+    </div>
+
+    <!-- RESULT -->
+    <div class="input-box" *ngIf="selectedAction !== 'Compare'">
+      <input type="number" [(ngModel)]="result" readonly />
+      <label>Result</label>
+
+      <!-- ✅ Convert -->
+      <select *ngIf="selectedAction === 'Convert'" [(ngModel)]="unit2">
+        <option *ngFor="let u of unitsMap[selectedType]" [value]="u">
+          {{u}}
+        </option>
+      </select>
+
+      <!-- ✅ Add / Subtract / Divide -->
+      <select *ngIf="selectedAction !== 'Convert'" [(ngModel)]="unit3" disabled>
+        <option *ngFor="let u of unitsMap[selectedType]" [value]="u">
+          {{u}}
+        </option>
+      </select>
+
+    </div>
+
+  </div>
+
+  <!-- Compare Result -->
+  <div *ngIf="selectedAction === 'Compare'" class="compare-result">
+    {{ compareResult }}
+  </div>
+
+  <!-- Button -->
+  <div class="btn-container">
+    <button class="calculate-btn" (click)="calculate()">
+       Calculate
+    </button>
+  </div>
+
+</div>
