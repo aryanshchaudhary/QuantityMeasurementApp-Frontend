@@ -34,21 +34,23 @@
           />
         </div>
         <small *ngIf="password?.invalid && password?.touched">
-          Minimum 6 characters required
+          Password is required
         </small>
       </div>
 
-      <!-- BUTTON -->
+      <!-- LOGIN BUTTON -->
       <button type="submit" [disabled]="loginForm.invalid">
         Login
       </button>
 
     </form>
 
-    <!-- SIGNUP -->
+    <!-- ✅ SIGNUP BUTTON (FIXED) -->
     <p class="footer-text">
       Don’t have an account?
-      <a routerLink="/signup">Signup</a>
+      <button type="button" class="link-btn" (click)="goToSignup()">
+        Signup
+      </button>
     </p>
 
   </div>

@@ -22,11 +22,11 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required]]
     });
   }
 
-  // ✅ getters (needed for HTML validation)
+  // ✅ getters
   get email() {
     return this.loginForm.get('email');
   }
@@ -35,26 +35,34 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
+  // ✅ LOGIN
   onSubmit() {
-  if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid) return;
 
-  this.authService.login(this.loginForm.value).subscribe({
-    next: (res: any) => {
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res: any) => {
 
-      const token = res?.token;
+        const token = res?.token;
 
-      if (!token) {
-        alert("Token missing ❌");
-        return;
+        if (!token) {
+          alert("Login failed ❌");
+          return;
+        }
+
+        // 🔥 store token + user
+        localStorage.setItem('token', token);
+        localStorage.setItem('name', this.loginForm.value.email);
+
+        this.router.navigateByUrl('/dashboard');
+      },
+      error: () => {
+        alert("Login failed ❌");
       }
+    });
+  }
 
-      localStorage.setItem('token', token);
-
-      this.router.navigateByUrl('/dashboard');
-    },
-    error: () => {
-      alert("Login failed ❌");
-    }
-  });
-}
+  // ✅ SIGNUP NAVIGATION (FIX)
+  goToSignup() {
+    this.router.navigateByUrl('/signup');
+  }
 }

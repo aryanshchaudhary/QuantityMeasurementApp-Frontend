@@ -1,0 +1,39 @@
+<div class="history-container">
+
+  <button class="back-btn" (click)="goBack()">←</button>
+
+  <h2>History</h2>
+
+  <div *ngIf="historyList.length === 0">
+    No history found 😕
+  </div>
+
+  <div *ngFor="let h of historyList" class="history-card">
+
+    <!-- CONVERT -->
+    <div *ngIf="h.operation === 'CONVERT'" class="expression">
+      {{h.value1}} {{h.unit1}} → {{h.result}} {{h.resultUnit}}
+    </div>
+
+    <!-- ADD -->
+    <div *ngIf="h.operation === 'ADD'" class="expression">
+      {{h.value1}} {{h.unit1}} + {{h.value2}} {{h.unit2}} = {{h.result}} {{h.resultUnit}}
+    </div>
+
+    <!-- SUBTRACT -->
+    <div *ngIf="h.operation === 'SUBTRACT'" class="expression">
+      {{h.value1}} {{h.unit1}} - {{h.value2}} {{h.unit2}} = {{h.result}} {{h.resultUnit}}
+    </div>
+
+    <!-- DIVIDE -->
+    <div *ngIf="h.operation === 'DIVIDE'" class="expression">
+      {{h.value1}} {{h.unit1}} ÷ {{h.value2}} {{h.unit2}} = {{h.result}} {{h.resultUnit}}
+    </div>
+
+    <div class="meta">
+      {{h.operation}} • {{h.type}}
+    </div>
+
+  </div>
+
+</div>

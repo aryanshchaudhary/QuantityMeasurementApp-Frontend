@@ -1,3 +1,42 @@
+// import { Injectable } from '@angular/core';
+// import { HttpClient } from '@angular/common/http';
+// import { Observable } from 'rxjs';
+
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class OperationService {
+
+//   private baseUrl = 'http://localhost:8080/api';
+
+//   constructor(private http: HttpClient) {}
+
+//   // ✅ CONVERT (with query param)
+//   convert(data: any, targetUnit: string): Observable<any> {
+//     return this.http.post(
+//       `${this.baseUrl}/convert?targetUnit=${targetUnit.toUpperCase()}`,
+//       data
+//     );
+//   }
+
+//   // ✅ SEND ARRAY DIRECTLY
+//   add(data: any[]): Observable<any> {
+//     return this.http.post(`${this.baseUrl}/add`, data);
+//   }
+
+//   subtract(data: any[]): Observable<any> {
+//     return this.http.post(`${this.baseUrl}/subtract`, data);
+//   }
+
+//   divide(data: any[]): Observable<any> {
+//     return this.http.post(`${this.baseUrl}/divide`, data);
+//   }
+
+//   compare(data: any[]): Observable<any> {
+//     return this.http.post(`${this.baseUrl}/compare`, data);
+//   }
+// }
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -9,9 +48,13 @@ export class OperationService {
 
   private baseUrl = 'http://localhost:8080/api';
 
+  // ✅ History microservice URL (CHANGE PORT if needed)
+  private historyUrl = 'http://localhost:8083/api/history';
+
   constructor(private http: HttpClient) {}
 
-  // ✅ CONVERT (with query param)
+  // ================== OPERATIONS ==================
+
   convert(data: any, targetUnit: string): Observable<any> {
     return this.http.post(
       `${this.baseUrl}/convert?targetUnit=${targetUnit.toUpperCase()}`,
@@ -19,7 +62,6 @@ export class OperationService {
     );
   }
 
-  // ✅ SEND ARRAY DIRECTLY
   add(data: any[]): Observable<any> {
     return this.http.post(`${this.baseUrl}/add`, data);
   }
@@ -34,5 +76,17 @@ export class OperationService {
 
   compare(data: any[]): Observable<any> {
     return this.http.post(`${this.baseUrl}/compare`, data);
+  }
+
+  // ================== HISTORY ==================
+
+  // ✅ SAVE HISTORY
+  saveHistory(data: any): Observable<any> {
+    return this.http.post(`${this.historyUrl}/save`, data);
+  }
+
+  // ✅ GET HISTORY (optional if you want to reuse)
+  getHistory(userName: string): Observable<any> {
+    return this.http.get(`${this.historyUrl}/${userName}`);
   }
 }
