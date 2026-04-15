@@ -4,9 +4,24 @@
   <div class="header">
     <h2 class="logo">✨ Unitra</h2>
 
-    <button class="logout-btn" (click)="logout()">
-      ⎋ Logout
-    </button>
+    <div class="header-actions">
+
+      <!-- HISTORY -->
+      <button *ngIf="isLoggedIn()" class="history-btn" (click)="goToHistory()">
+        📜 History
+      </button>
+
+      <!-- LOGIN -->
+      <button *ngIf="!isLoggedIn()" class="logout-btn" (click)="goToLogin()">
+        🔐 Login
+      </button>
+
+      <!-- LOGOUT -->
+      <button *ngIf="isLoggedIn()" class="logout-btn" (click)="logout()">
+        ⎋ Logout
+      </button>
+
+    </div>
   </div>
 
   <!-- Banner -->
@@ -48,12 +63,12 @@
     </div>
   </div>
 
-  <!-- ================= INPUTS ================= -->
+  <!-- Inputs -->
   <div class="inputs">
 
-    <!-- VALUE 1 -->
+    <!-- Value 1 -->
     <div class="input-box">
-      <input type="number" [(ngModel)]="value1" required />
+      <input type="number" [(ngModel)]="value1" />
       <label>Value 1</label>
 
       <select [(ngModel)]="unit1" (change)="onUnit1Change()">
@@ -63,9 +78,9 @@
       </select>
     </div>
 
-    <!-- VALUE 2 -->
+    <!-- Value 2 -->
     <div class="input-box" *ngIf="selectedAction !== 'Convert'">
-      <input type="number" [(ngModel)]="value2" required />
+      <input type="number" [(ngModel)]="value2" />
       <label>Value 2</label>
 
       <select [(ngModel)]="unit2">
@@ -75,30 +90,27 @@
       </select>
     </div>
 
-    <!-- RESULT -->
+    <!-- Result -->
     <div class="input-box" *ngIf="selectedAction !== 'Compare'">
       <input type="number" [(ngModel)]="result" readonly />
       <label>Result</label>
 
-      <!-- ✅ Convert -->
       <select *ngIf="selectedAction === 'Convert'" [(ngModel)]="unit2">
         <option *ngFor="let u of unitsMap[selectedType]" [value]="u">
           {{u}}
         </option>
       </select>
 
-      <!-- ✅ Add / Subtract / Divide -->
       <select *ngIf="selectedAction !== 'Convert'" [(ngModel)]="unit3" disabled>
         <option *ngFor="let u of unitsMap[selectedType]" [value]="u">
           {{u}}
         </option>
       </select>
-
     </div>
 
   </div>
 
-  <!-- Compare Result -->
+  <!-- Compare -->
   <div *ngIf="selectedAction === 'Compare'" class="compare-result">
     {{ compareResult }}
   </div>
@@ -106,7 +118,7 @@
   <!-- Button -->
   <div class="btn-container">
     <button class="calculate-btn" (click)="calculate()">
-       Calculate
+      Calculate
     </button>
   </div>
 
