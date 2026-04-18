@@ -1,0 +1,11 @@
+[build]
+  command = "npm install && npm run build"
+  publish = "dist/Quantity-Measurement-App"
+
+[build.environment]
+  NETLIFY_SKIP_PLUGIN_ANGULAR_RUNTIME = "true"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
