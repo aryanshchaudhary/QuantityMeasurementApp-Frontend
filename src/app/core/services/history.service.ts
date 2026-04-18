@@ -33,7 +33,7 @@ import { Observable } from 'rxjs';
 export class HistoryService {
 
   // ✅ Use API Gateway
-  private baseUrl = "https://gateway-service-vg52.onrender.com/api/history";
+  private baseUrl = "https://gateway-service-vg52.onrender.com/history";
 
   constructor(private http: HttpClient) {}
 
