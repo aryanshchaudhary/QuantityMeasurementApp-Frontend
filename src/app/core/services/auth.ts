@@ -11,7 +11,7 @@ interface LoginResponse {
 })
 export class AuthService {
 
-  private baseUrl = 'http://localhost:8080/auth';
+private baseUrl = 'https://gateway-service-vg52.onrender.com';
 
   constructor(private http: HttpClient) {}
 
